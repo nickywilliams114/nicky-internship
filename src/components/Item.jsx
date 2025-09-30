@@ -1,4 +1,4 @@
-export function Item({ id, title, authorImage, nftImage, nftId, authorId, code }) {
+const Item = (id, title, authorImage, nftImage, nftId, authorId, code) => {
  return (
    <>
     <div>{id} key=item.id </div>
@@ -9,6 +9,9 @@ export function Item({ id, title, authorImage, nftImage, nftId, authorId, code }
     <div>{authorId}</div>
     <div>{code}</div>
    </>
+   
  );
 }
+
+export default Item;
  
