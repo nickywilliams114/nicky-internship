@@ -38,22 +38,26 @@ const KeenSlider = () => {
               <div className="keen-slider__slide number-slide5">4</div>
               <div className="keen-slider__slide number-slide6">5</div>
             </div>
-            {slider && loaded && instanceRef.current (
-              <>
-                <Arrow
-                  left
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.prev()
-                  }
-                />
-                  
-                <Arrow
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.next()
-                  }
-                />
-              </>
-            )}            
+             {loaded && instanceRef.current && (
+            <>
+              <Arrow
+                left
+                onClick={(e) =>
+                  e.stopPropagation() || instanceRef.current?.prev()
+                }
+              />
+
+              <Arrow
+                onClick={(e) =>
+                  e.stopPropagation() || instanceRef.current?.next()
+                }
+                disabled={
+                  currentSlide ===
+                  instanceRef.current.track.details.slides.length - 1
+                }
+              />
+            </>
+            )}
           </div>
         </div>
       </div>
@@ -81,5 +85,6 @@ function Arrow(props) {
     </svg>
   )
 }
+
 
 export default KeenSlider;
