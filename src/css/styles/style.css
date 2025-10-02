@@ -8934,9 +8934,6 @@ blockquote.s1:before {
 }
 
 .toggle-list li h2 {
-  -moz-user-select: none;
-  -html-user-select: none;
-  user-select: none;
   color: #555;
   font-size: 16px;
   line-height: 20px;
@@ -11529,7 +11526,6 @@ section.no-padding {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: background 0.2s ease;
 }
 
 .arrow svg {
@@ -11548,11 +11544,11 @@ section.no-padding {
 }
 
 .arrow--left {
-  left: 10px; /* inside container */
+  left: -5px;
 }
 
 .arrow--right {
-  right: 10px; /* inside container */
+  right: -5px;
 }
 
 /* new owl close */
@@ -15158,7 +15154,7 @@ a.btn-slider:hover {
   margin: 0 6px;
   display: inline-block;
   zoom: 1;
-  *display: inline;
+  display: inline;
 }
 
 .testi-slider .flex-control-paging li a {

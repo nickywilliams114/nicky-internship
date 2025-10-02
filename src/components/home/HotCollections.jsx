@@ -30,10 +30,16 @@ const HotCollections = () => {
       setLoaded(true);
     },
     breakpoints: {
-      "(min-width: 600px)": {
-        slides: { perView: 2, spacing: 20 },
+      "(min-width: 150px)": {
+        slides: { perView: 1 },
       },
-      "(min-width: 1000px)": {
+      "(min-width: 768px)": {
+        slides: { perView: 2, spacing: 15 },
+      },
+      "(min-width: 992px)": {
+        slides: { perView: 3, spacing: 5 },
+      },
+      "(min-width: 1200px)": {
         slides: { perView: 4, spacing: 10 },
       },
     },
