@@ -99,8 +99,7 @@ const HotCollections = () => {
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
               {loading
-                ? 
-                  new Array(6).fill(0).map((_, index) => (
+                ? new Array(6).fill(0).map((_, index) => (
                     <div className="keen-slider__slide" key={index}>
                       <div className="nft_wrap">
                         <Link to="">
@@ -125,8 +124,7 @@ const HotCollections = () => {
                       </div>
                     </div>
                   ))
-                : 
-                  getCollection.length > 0 &&
+                : getCollection.length > 0 &&
                   getCollection.map((item) => (
                     <div className="keen-slider__slide" key={item.id}>
                       <div className="nft_coll">
