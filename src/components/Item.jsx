@@ -1,4 +1,7 @@
-const Item = (id, title, authorImage, nftImage, nftId, authorId, code) => {
+import React from 'react';
+import { Link } from "react-router-dom";
+
+const Item =({ id, title, authorImage, nftImage, nftId, authorId, code, price, likes, expiryDate}) => {
  return (
    <>
     <div>{id} key=item.id </div>
@@ -10,7 +13,7 @@ const Item = (id, title, authorImage, nftImage, nftId, authorId, code) => {
     <div>{code}</div>
    </>
    
- );
+  );
 }
 
 export default Item;
