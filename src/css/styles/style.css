@@ -11543,12 +11543,29 @@ section.no-padding {
   cursor: not-allowed;
 }
 
+/*Hot-Collections Keen-Slider*/
+
 .arrow--left {
   left: -5px;
 }
 
 .arrow--right {
   right: -5px;
+}
+
+/*New-Items Keen-Slider*/
+
+.arrow-left {
+  left: -5px;
+}
+
+.arrow-right {
+  right: -5px;
+}
+
+.arrow-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 /* new owl close */

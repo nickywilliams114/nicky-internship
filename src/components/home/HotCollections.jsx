@@ -99,7 +99,7 @@ const HotCollections = () => {
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
               {loading
-                ? // Skeleton loader slides
+                ? 
                   new Array(6).fill(0).map((_, index) => (
                     <div className="keen-slider__slide" key={index}>
                       <div className="nft_wrap">
@@ -121,12 +121,11 @@ const HotCollections = () => {
                         <Link to="">
                           <Skeleton width="100px" height="20px" />
                         </Link>
-                        <br />
                         <Skeleton width="60px" height="20px" />
                       </div>
                     </div>
                   ))
-                : // Real collection slides
+                : 
                   getCollection.length > 0 &&
                   getCollection.map((item) => (
                     <div className="keen-slider__slide" key={item.id}>
@@ -154,7 +153,7 @@ const HotCollections = () => {
                           <Link to="/explore">
                             <h4>{item.title}</h4>
                           </Link>
-                          <span>{item.code}</span>
+                          <span>ERC-{item.code}</span>
                         </div>
                       </div>
                     </div>
