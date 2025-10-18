@@ -1,20 +1,32 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React from "react";
+import CountDownTimer from '../components/home/CountDownTimer';
 
-const Item =({ id, title, authorImage, nftImage, nftId, authorId, code, price, likes, expiryDate}) => {
- return (
-   <>
-    <div>{id} key=item.id </div>
-    <div>{title}</div>
-    <div>{authorImage}</div>
-    <div>{nftImage}</div>
-    <div>{nftId}</div>
-    <div>{authorId}</div>
-    <div>{code}</div>
-   </>
-   
+const Item = ({
+  id,
+  title,
+  authorImage,
+  nftImage,
+  nftId,
+  authorId,
+  code,
+  price,
+  likes,
+  expiryDate,
+}) => {
+  return (
+    <div className="item-card" key={id}>
+      <img src={nftImage} alt={title} className="nft-image" />
+      <h3>{title}</h3>
+      <p>Price: {price} ETH</p>
+      <p>Likes: {likes}</p>
+
+      {expiryDate ? (
+        <CountDownTimer expiryDate={expiryDate} />
+      ) : (
+        <p className="no-timer"></p>
+      )}
+    </div>
   );
-}
+};
 
 export default Item;
- 

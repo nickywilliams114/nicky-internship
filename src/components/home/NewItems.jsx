@@ -5,10 +5,11 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
+import CountDownTimer from "./CountDownTimer";
 
 
 
-const NewItems = () => {
+const NewItems = ({ item }) => {
   const [getNewItems, setNewItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newCurrentSlide, setNewCurrentSlide] = useState(0);
@@ -148,7 +149,7 @@ const NewItems = () => {
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
-                                                          
+                        <CountDownTimer expiryDate={item.expiryDate} />                                  
                         <div className="nft__item_wrap">
                           <div className="nft__item_extra">
                             <div className="nft__item_buttons">
