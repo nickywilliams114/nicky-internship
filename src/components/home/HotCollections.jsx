@@ -10,7 +10,7 @@ import "keen-slider/keen-slider.min.css";
 
 const HotCollections = () => {
   const { id } = useParams();
-  const [getCollection, setCollection] = useState([]);
+  const [getHotCollection, setHotCollection] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -45,12 +45,12 @@ const HotCollections = () => {
     },
   });
 
-  const fetchCollections = async () => {
+  const fetchHotCollections = async () => {
     try {
       const { data } = await axios.get(
         `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections?`
       );
-      setCollection(data);
+      setHotCollection(data);
     } catch (error) {
       console.error("Error fetching collections:", error);
     } finally {
@@ -59,7 +59,7 @@ const HotCollections = () => {
   };
 
   useEffect(() => {
-    fetchCollections();
+    fetchHotCollections();
   }, []);
 
   function Arrow({ left, disabled, onClick }) {
@@ -86,7 +86,7 @@ const HotCollections = () => {
   }
 
   return (
-    <section id="section-collections" className="no-bottom">
+    <section id="section-hot-collections" className="no-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -124,8 +124,8 @@ const HotCollections = () => {
                       </div>
                     </div>
                   ))
-                : getCollection.length > 0 &&
-                  getCollection.map((item) => (
+                : getHotCollection.length > 0 &&
+                  getHotCollection.map((item) => (
                     <div className="keen-slider__slide" key={item.id}>
                       <div className="nft_coll">
                         <div className="nft_wrap">

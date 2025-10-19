@@ -11568,6 +11568,10 @@ section.no-padding {
   cursor: not-allowed;
 }
 
+div.de_countdown.expiryDate:null {
+  display: hidden;
+}
+
 /* new owl close */
 
 .text-light .owl-theme .owl-controls .owl-page span {

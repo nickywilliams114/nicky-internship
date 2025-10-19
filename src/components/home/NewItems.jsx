@@ -14,7 +14,6 @@ const NewItems = ({ item }) => {
   const [loading, setLoading] = useState(true);
   const [newCurrentSlide, setNewCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
     initial: 0,
@@ -86,7 +85,7 @@ const NewItems = ({ item }) => {
   }
 
   return (
-    <section id="section-items" className="no-bottom">
+    <section id="section-new-items" className="no-bottom">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -98,11 +97,10 @@ const NewItems = ({ item }) => {
 
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
-              {loading
-                ? 
+              {loading ?                 
                   new Array(7).fill(0).map((_, index) => (
                     <div className="keen-slider__slide" key={index}>
-                      <div className="nft__item">
+                      <div className="nft__item" >
                         <div className="author_list_pp">
                           <Link
                             to={''}
@@ -139,17 +137,19 @@ const NewItems = ({ item }) => {
                   getNewItems.length > 0 &&  
                   getNewItems.map((item) => (                    
                     <div className="keen-slider__slide" key={item.id}>
-                      <div className="nft__item">
+                      <div className="nft__item" >
                         <div className="author_list_pp">
                           <Link to={`/author/${item.authorId}`}
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Creator: Monica Lucas">
-                            <img className="lazy" src={item.authorImage} alt="" />
+                            <img className="lazy" src={item.authorImage} alt={item.author} />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
-                        <CountDownTimer expiryDate={item.expiryDate} />                                  
+                        {item.expiryDate && (
+                        <CountDownTimer expiryDate={item.expiryDate} />                      
+                        )}            
                         <div className="nft__item_wrap">
                           <div className="nft__item_extra">
                             <div className="nft__item_buttons">
@@ -179,7 +179,7 @@ const NewItems = ({ item }) => {
                             <img
                               src={item.nftImage}
                               className="lazy nft__item_preview"
-                              alt=""
+                              alt={item.title}
                             />
                           </Link>
                         </div>
@@ -195,7 +195,7 @@ const NewItems = ({ item }) => {
                         </div>
                       </div>
                     </div>  
-                  ))}
+              ))}
             </div>          
             {/* Arrows */}
             {loaded && instanceRef.current && (
