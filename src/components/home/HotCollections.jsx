@@ -46,17 +46,13 @@ const HotCollections = () => {
   });
 
   const fetchHotCollections = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections?`
-      );
-      setHotCollection(data);
-    } catch (error) {
-      console.error("Error fetching collections:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const { data } = await axios.get(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
+    );
+    setHotCollection(data);
+    setLoading(false);
+  }
+  
 
   useEffect(() => {
     fetchHotCollections();
