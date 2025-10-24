@@ -10176,6 +10176,7 @@ i.bg-color-secondary {
 }
 
 #loadmore {
+  visibility: visible;
   display: inline-block;
   margin-top: 10px;
 }
