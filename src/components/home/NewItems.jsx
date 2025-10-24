@@ -7,8 +7,6 @@ import Skeleton from "../UI/Skeleton";
 import CountDownTimer from "./CountDownTimer";
 import Item from "../Item";
 
-
-
 const NewItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,19 +42,18 @@ const NewItems = () => {
     },
   });
 
-  const fetchNewItems = async () => { 
-      const { data } = await axios.get(
-        `https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems`
-      );
-      setItems(data);  
-      setLoading(false);
+  const fetchNewItems = async () => {
+    const { data } = await axios.get(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems`
+    );
+    setItems(data);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchNewItems();
   }, []);
 
-  
   function Arrow({ left, disabled, onClick }) {
     return (
       <button
@@ -93,13 +90,13 @@ const NewItems = () => {
 
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
-              {loading ?                 
-                new Array(7).fill(0).map((_, index) => (
-                  <div className="keen-slider__slide" key={index}>
-                      <div className="nft__item" >
+              {loading
+                ? new Array(7).fill(0).map((_, index) => (
+                    <div className="keen-slider__slide" key={index}>
+                      <div className="nft__item">
                         <div className="author_list_pp">
                           <Link
-                            to={''}
+                            to={""}
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Creator: Monica Lucas"
@@ -113,14 +110,14 @@ const NewItems = () => {
                           </Link>
                         </div>
                         <div className="de_countdown">5h 30m 32s</div>
-                          <Link to={``}>
-                            <Skeleton width="100%" height="350px" />
-                          </Link>
+                        <Link to={``}>
+                          <Skeleton width="100%" height="350px" />
+                        </Link>
                         <div className="nft__item_info">
                           <Link to={``}>
                             <Skeleton width="180px" height="30px" />
                           </Link>
-                            <Skeleton width="100px" height="20px" />
+                          <Skeleton width="100px" height="20px" />
                         </div>
                         <div className="nft__item_like">
                           <Skeleton width="30px" height="15px" />
@@ -128,15 +125,13 @@ const NewItems = () => {
                       </div>
                     </div>
                   ))
-                :
-                  items.length > 0 &&  
-                  items.map((item) => (                    
+                : items.length > 0 &&
+                  items.map((item) => (
                     <div className="keen-slider__slide" key={item.id}>
                       <Item {...item} />
                     </div>
-                  ))
-              }
-            </div>          
+                  ))}
+            </div>
             {/* Arrows */}
             {loaded && instanceRef.current && (
               <>
