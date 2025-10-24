@@ -15,7 +15,7 @@ const Author = () => {
   const fetchAuthorData = async () => {
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
-    );console.log(data);
+    );
     setAuthorData(data);
     setLoading(false);
   };
