@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BrowseByCategory from "../components/home/BrowseByCategory";
 import HotCollections from "../components/home/HotCollections";
 import Landing from "../components/home/Landing";
@@ -8,8 +8,6 @@ import TopSellers from "../components/home/TopSellers";
 
 
 const Home = () => {
-  
-
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">

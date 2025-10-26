@@ -2696,6 +2696,17 @@ address span strong {
   color: #333;
 }
 
+
+/* animate on scroll */
+
+/* ------------------------------ */
+
+[data-aos] {
+  pointer-events: auto !important;
+  overflow: visible !important;
+}
+
+
 /* border */
 
 /* ------------------------------ */

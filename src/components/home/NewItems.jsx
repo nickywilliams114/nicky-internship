@@ -4,8 +4,8 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
-import CountDownTimer from "./CountDownTimer";
 import Item from "../Item";
+import AOS from "aos";
 
 const NewItems = () => {
   const [items, setItems] = useState([]);
@@ -51,7 +51,9 @@ const NewItems = () => {
   };
 
   useEffect(() => {
-    fetchNewItems();
+    fetchNewItems().then(() => {
+      AOS.refresh();
+    });
   }, []);
 
   function Arrow({ left, disabled, onClick }) {
