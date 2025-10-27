@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import CountDownTimer from '../components/home/CountDownTimer';
 
@@ -78,4 +78,4 @@ const Item = ({id, title, authorImage, nftImage, nftId, authorId, code, price, l
 
 };
 
-export default Item;
+export default memo(Item);
