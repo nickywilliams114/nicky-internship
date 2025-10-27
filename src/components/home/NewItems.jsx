@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -52,18 +52,29 @@ const NewItems = () => {
 
   useEffect(() => {
     fetchNewItems().then(() => {
-      AOS.refresh();
+        AOS.refresh();
     });
   }, []);
 
-  function Arrow({ left, disabled, onClick }) {
+  useEffect(() => {
+    if (instanceRef.current) {
+      instanceRef.current.update();
+    }
+  }, [items]);
+
+  const handlePrev = useCallback(() => {
+    instanceRef.current?.prev()
+  }, [instanceRef]);
+
+  const handleNext = useCallback(() => {
+    instanceRef.current?.next()
+  }, [instanceRef]);
+
+  const Arrow = React.memo(function Arrow({ left, onClick }) {
     return (
       <button
-        className={`arrow ${left ? "arrow-left" : "arrow-right"} ${
-          disabled ? "arrow-disabled" : ""
-        }`}
+        className={`arrow ${left ? "arrow-left" : "arrow-right"}`}
         onClick={onClick}
-        disabled={disabled}
         aria-label={left ? "Previous slide" : "Next slide"}
       >
         {left ? (
@@ -77,7 +88,7 @@ const NewItems = () => {
         )}
       </button>
     );
-  }
+  });
 
   return (
     <section id="section-new-items" className="no-bottom">
@@ -95,65 +106,21 @@ const NewItems = () => {
               {loading
                 ? new Array(7).fill(0).map((_, index) => (
                     <div className="keen-slider__slide" key={index}>
-                      <div className="nft__item">
-                        <div className="author_list_pp">
-                          <Link
-                            to={""}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Creator: Monica Lucas"
-                          >
-                            <Skeleton
-                              width="50px"
-                              height="50px"
-                              borderRadius="50%"
-                            />
-                            <i className="fa fa-check"></i>
-                          </Link>
-                        </div>
-                        <div className="de_countdown">5h 30m 32s</div>
-                        <Link to={``}>
-                          <Skeleton width="100%" height="350px" />
-                        </Link>
-                        <div className="nft__item_info">
-                          <Link to={``}>
-                            <Skeleton width="180px" height="30px" />
-                          </Link>
-                          <Skeleton width="100px" height="20px" />
-                        </div>
-                        <div className="nft__item_like">
-                          <Skeleton width="30px" height="15px" />
-                        </div>
-                      </div>
+                      <Skeleton width="100%" height="350px" />
                     </div>
                   ))
-                : items.length > 0 &&
-                  items.map((item) => (
+                : items.map((item) => (
                     <div className="keen-slider__slide" key={item.id}>
                       <Item {...item} />
                     </div>
                   ))}
             </div>
+                 
             {/* Arrows */}
             {loaded && instanceRef.current && (
               <>
-                <Arrow
-                  left
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.prev()
-                  }
-                  disabled={newCurrentSlide === 0}
-                />
-
-                <Arrow
-                  onClick={(e) =>
-                    e.stopPropagation() || instanceRef.current?.next()
-                  }
-                  disabled={
-                    newCurrentSlide ===
-                    instanceRef.current.track.details.slides.length - 1
-                  }
-                />
+                <Arrow left onClick={handlePrev} />
+                <Arrow onClick={handleNext} />
               </>
             )}
           </div>
@@ -163,4 +130,4 @@ const NewItems = () => {
   );
 };
 
-export default NewItems;
+export default React.memo(NewItems);

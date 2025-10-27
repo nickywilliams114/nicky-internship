@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Item from "../Item";
@@ -22,7 +22,9 @@ const HotCollections = () => {
       spacing: 10,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel.add);
+      window.requestAnimationFrame(() => {
+      setCurrentSlide(slider.track.details.rel);
+      });
     },
     created() {
       setLoaded(true);
@@ -49,35 +51,89 @@ const HotCollections = () => {
     );
     setHotCollection(data);
     setLoading(false);
-  }
+  };
   
-
   useEffect(() => {
     fetchHotCollections();
   }, []);
 
-  function Arrow({ left, disabled, onClick }) {
-    return (
-      <button
-        className={`arrow ${left ? "arrow--left" : "arrow--right"} ${
-          disabled ? "arrow--disabled" : ""
-        }`}
-        onClick={onClick}
-        disabled={disabled}
-        aria-label={left ? "Previous slide" : "Next slide"}
-      >
-        {left ? (
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M16.67 0l2.83 2.829-9.34 9.175 9.34 9.167-2.83 2.829L4.5 12z" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M7.33 24l-2.83-2.829 9.34-9.175-9.34-9.167L7.33 0l12.17 12z" />
-          </svg>
-        )}
-      </button>
-    );
-  }
+  useEffect(() => {
+    if (instanceRef.current) {
+      instanceRef.current.update();
+    }
+  }, [getHotCollection]);
+
+  const slides = useMemo(() => {
+    if (loading) {
+      return new Array(6).fill(0).map((_, index) => (
+        <div className="keen-slider__slide" key={index}>
+          <div className="nft_wrap">
+            <Skeleton width="100%" height="200px" />
+          </div>
+          <div className="nft_coll_pp">
+            <Skeleton width="50px" height="50px" borderRadius="50%" />
+            <i className="fa fa-check"></i>
+          </div>
+          <div className="nft_coll_info">
+            <Skeleton width="100px" height="20px" />
+            <Skeleton width="60px" height="20px" />
+          </div>
+        </div>
+      ));
+    }
+
+    return getHotCollection.map((item) => (
+      <div className="keen-slider__slide" key={item.id}>
+        <div className="nft_coll">
+          <div className="nft_wrap">
+            <Link to={`/item-details/${item.nftId}`}>
+              <img
+                src={item.nftImage}
+                className="lazy img-fluid"
+                alt={item.title}
+                loading="lazy"
+              />
+            </Link>
+          </div>
+          <div className="nft_coll_pp">
+            <Link to={`/author/${item.authorId}`}>
+              <img
+                className="lazy pp-coll"
+                src={item.authorImage}
+                alt="author"
+                loading="lazy"
+              />
+            </Link>
+            <i className="fa fa-check"></i>
+          </div>
+          <div className="nft_coll_info">
+            <Link to="/explore">
+              <h4>{item.title}</h4>
+            </Link>
+            <span>ERC-{item.code}</span>
+          </div>
+        </div>
+      </div>
+    ));
+  }, [loading, getHotCollection]);
+
+  const Arrow = React.memo(({ left, onClick }) => (
+    <button
+      className={`arrow ${left ? "arrow--left" : "arrow--right"}`}
+      onClick={onClick}
+      aria-label={left ? "Previous slide" : "Next slide"}
+    >
+      {left ? (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M16.67 0l2.83 2.829-9.34 9.175 9.34 9.167-2.83 2.829L4.5 12z" />
+        </svg>
+      ) : (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M7.33 24l-2.83-2.829 9.34-9.175-9.34-9.167L7.33 0l12.17 12z" />
+        </svg>
+      )}
+    </button>
+  ));
 
   return (
     <section id="section-hot-collections" className="no-bottom">
@@ -92,64 +148,7 @@ const HotCollections = () => {
 
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
-              {loading
-                ? new Array(6).fill(0).map((_, index) => (
-                    <div className="keen-slider__slide" key={index}>
-                      <div className="nft_wrap">
-                        <Link to="">
-                          <Skeleton width="100%" height="200px" />
-                        </Link>
-                      </div>
-                      <div className="nft_coll_pp">
-                        <Link to="">
-                          <Skeleton
-                            width="50px"
-                            height="50px"
-                            borderRadius="50%"
-                          />
-                        </Link>
-                        <i className="fa fa-check"></i>
-                      </div>
-                      <div className="nft_coll_info">
-                        <Link to="">
-                          <Skeleton width="100px" height="20px" />
-                        </Link>
-                        <Skeleton width="60px" height="20px" />
-                      </div>
-                    </div>
-                  ))
-                : getHotCollection.length > 0 &&
-                  getHotCollection.map((item) => (
-                    <div className="keen-slider__slide" key={item.id}>
-                      <div className="nft_coll">
-                        <div className="nft_wrap">
-                          <Link to={`/item-details${item.nftId}`}>
-                            <img
-                              src={item.nftImage}
-                              className="lazy img-fluid"
-                              alt={item.title}
-                            />
-                          </Link>
-                        </div>
-                        <div className="nft_coll_pp">
-                          <Link to="/author">
-                            <img
-                              className="lazy pp-coll"
-                              src={item.authorImage}
-                              alt="author"
-                            />
-                          </Link>
-                          <i className="fa fa-check"></i>
-                        </div>
-                        <div className="nft_coll_info">
-                          <Link to="/explore">
-                            <h4>{item.title}</h4>
-                          </Link>
-                          <span>ERC-{item.code}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              {slides}
             </div>
 
             {/* Arrows */}
@@ -160,16 +159,10 @@ const HotCollections = () => {
                   onClick={(e) =>
                     e.stopPropagation() || instanceRef.current?.prev()
                   }
-                  disabled={currentSlide === 0}
                 />
-
                 <Arrow
                   onClick={(e) =>
                     e.stopPropagation() || instanceRef.current?.next()
-                  }
-                  disabled={
-                    currentSlide ===
-                    instanceRef.current.track.details.slides.length - 1
                   }
                 />
               </>
@@ -181,4 +174,4 @@ const HotCollections = () => {
   );
 };
 
-export default HotCollections;
+export default React.memo(HotCollections);
