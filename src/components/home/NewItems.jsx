@@ -21,23 +21,20 @@ const NewItems = () => {
       spacing: 10,
     },
     slideChanged(slider) {
-      setNewCurrentSlide(slider.track.details.rel.add);
+      setNewCurrentSlide(slider.track.details.rel);
     },
     created() {
       setLoaded(true);
     },
     breakpoints: {
-      "(min-width: 150px)": {
-        slides: { perView: 1 },
-      },
       "(min-width: 768px)": {
-        slides: { perView: 2, spacing: 15 },
+        slides: { perView: 2, spacing: 10 },
       },
       "(min-width: 992px)": {
-        slides: { perView: 3, spacing: 5 },
+        slides: { perView: 3, spacing: 8 },
       },
       "(min-width: 1200px)": {
-        slides: { perView: 4, spacing: 10 },
+        slides: { perView: 4, spacing: 5 },
       },
     },
   });
@@ -52,7 +49,7 @@ const NewItems = () => {
 
   useEffect(() => {
     fetchNewItems().then(() => {
-        AOS.refresh();
+      AOS.refresh();
     });
   }, []);
 
@@ -63,11 +60,11 @@ const NewItems = () => {
   }, [items]);
 
   const handlePrev = useCallback(() => {
-    instanceRef.current?.prev()
+    instanceRef.current?.prev();
   }, [instanceRef]);
 
   const handleNext = useCallback(() => {
-    instanceRef.current?.next()
+    instanceRef.current?.next();
   }, [instanceRef]);
 
   const Arrow = React.memo(function Arrow({ left, onClick }) {
@@ -115,7 +112,7 @@ const NewItems = () => {
                     </div>
                   ))}
             </div>
-                 
+
             {/* Arrows */}
             {loaded && instanceRef.current && (
               <>
