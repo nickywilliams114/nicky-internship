@@ -11557,6 +11557,22 @@ section.no-padding {
 
 /*Hot-Collections Keen-Slider*/
 
+.keen-slider {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.keen-slider__slide {
+  min-width: 100%;
+}
+
+.navigation-wrapper {
+  position: relative; /* so arrows are placed relative to this container */
+  width: 100%;
+}
+
 .arrow--left {
   left: -5px;
 }

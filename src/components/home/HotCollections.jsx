@@ -23,7 +23,7 @@ const HotCollections = () => {
     },
     slideChanged(slider) {
       window.requestAnimationFrame(() => {
-      setCurrentSlide(slider.track.details.rel);
+        setCurrentSlide(slider.track.details.rel);
       });
     },
     created() {
@@ -52,7 +52,7 @@ const HotCollections = () => {
     setHotCollection(data);
     setLoading(false);
   };
-  
+
   useEffect(() => {
     fetchHotCollections();
   }, []);
@@ -62,6 +62,32 @@ const HotCollections = () => {
       instanceRef.current.update();
     }
   }, [getHotCollection]);
+
+  useEffect(() => {
+    if (!sliderRef.current || !instanceRef.current) return;
+
+    const handleUpdate = () => {
+      if (instanceRef.current) instanceRef.current.update();
+    };
+
+    const imgs = sliderRef.current.querySelectorAll("img");
+
+    imgs.forEach((img) => {
+      if (img.complete) {
+        handleUpdate();
+      } else {
+        img.addEventListener("load", handleUpdate);
+      }
+    });
+
+    window.addEventListener("resize", handleUpdate);
+
+    return () => {
+      imgs.forEach((img) => img.removeEventListener("load", handleUpdate));
+
+      window.removeEventListener("resize", handleUpdate);
+    };
+  }, [loaded, getHotCollection]);
 
   const slides = useMemo(() => {
     if (loading) {

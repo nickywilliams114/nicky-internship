@@ -63,6 +63,29 @@ const NewItems = () => {
       instanceRef.current.update();
     }
   }, [items]);
+  useEffect(() => {
+    if (!sliderRef.current || !instanceRef.current) return;
+
+    const handleUpdate = () => {
+      if (instanceRef.current) instanceRef.current.update();
+    };
+
+    const imgs = sliderRef.current.querySelectorAll("img");
+
+    imgs.forEach((img) => {
+      if (img.complete) {
+        handleUpdate();
+      } else {
+        img.addEventListener("load", handleUpdate);
+      }
+    });
+    window.addEventListener("resize", handleUpdate);
+
+    return () => {
+      imgs.forEach((img) => img.removeEventListener("load", handleUpdate));
+      window.removeEventListener("resize", handleUpdate);
+    };
+  }, [loaded, items]);
 
   const handlePrev = useCallback(() => {
     instanceRef.current?.prev();
